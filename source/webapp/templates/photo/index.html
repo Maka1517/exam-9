@@ -19,7 +19,7 @@
             {% endif %}
           <p>
             <a class="{% if photo in liked_photo %}hidden{% endif %} like" href="{% url 'webapp:photo_like' photo.pk %}">Избранное</a>
-            <a class="{% if not photo in liked_photo %}hidden{% endif %} unlike" href="{% url 'webapp:article_unlike' article.pk %}">Unlike</a>
+            <a class="{% if not photo in liked_photo %}hidden{% endif %} unlike" href="{% url 'webapp:photo_unlike' photo.pk %}">Убрать из избранного</a>
           </p>
          </div>
     {% endfor %}

@@ -67,7 +67,7 @@ class PhotoDeleteView(PermissionRequiredMixin, DeleteView):
 
 
 class PhotoLikeView(LoginRequiredMixin, View):
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         liked_photo = get_object_or_404(Photo, pk=kwargs.get('pk'))
         like, created = PhotoLike.objects.get_or_create(photo=liked_photo, user=request.user)
         if created:
