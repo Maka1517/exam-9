@@ -16,3 +16,23 @@ class Photo(models.Model):
         verbose_name = 'Картинка'
         verbose_name_plural = 'Картинки'
 
+
+# class Favorites(models.Model):
+#     photos = models.ManyToManyField('webapp.Photo', related_name='favorites', verbose_name='Избранные',
+#                                     through='webapp.Photo', through_fields=['photo', 'user', 'text'])
+#
+#     class Meta:
+#         verbose_name = 'Избранное'
+#         verbose_name_plural = 'Избранные'
+# #
+#
+# class MyPhotos(models.Model):
+#     photo = models.ForeignKey('webapp.Photo', on_delete=models.PROTECT,
+#                               verbose_name='Картинка', related_name='favorites_photo')
+#     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,
+#                              related_name='favorites_photo')
+#
+#     class Meta:
+#         verbose_name = 'Фото'
+#         verbose_name_plural = 'Фотки'
+

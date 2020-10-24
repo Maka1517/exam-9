@@ -215,3 +215,21 @@ input[type='submit']:hover {
     border-color: #444444;
     color: #444444;
 }
+
+.avatar {
+    display: inline-block;
+    /*float: left;*/
+    width: 100px;
+    height: auto;
+    margin-right: 5px;
+    margin-bottom: 1px;
+}
+
+
+.text-center {
+    text-align: center;
+}
+
+.clear {
+    clear: both;
+}
