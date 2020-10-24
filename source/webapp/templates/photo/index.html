@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Photo{% endblock %}
+
+{% block content %}
+    <h1>Список фотографии</h1>
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+    {% for photo in photos %}
+         <div class="box">
+            <h3><a href="{% url 'webapp:photo_view' photo.pk %}">{{ photo.text }}</a></h3>
+            {% if photo.picture %}
+                <img class="avatar" src="{{ photo.picture.url }}" width="50" height="50" alt="photo">
+            {% endif %}
+
+    {#        {% if perms.webapp.change_product or product.author == request.user %}#}
+    {#        <p><a href="{% url 'webapp:product_delete' product.pk %}">Delete</a></p>#}
+    {#        <p><a href="{% url 'webapp:product_update' product.pk %}">Update</a></p>#}
+    {#        {% endif %}#}
+         </div>
+    {% endfor %}
+{% endblock %}

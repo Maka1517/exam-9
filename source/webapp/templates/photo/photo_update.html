@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+<form method="post">
+    {% csrf_token %}
+
+    {% block title %}Update{% endblock %}
+
+{% block menu %}
+    <li><a href="{% url 'webapp:photo_view' photo.pk %}">Отмена</a></li>
+{% endblock %}
+
+{% block content %}
+    <h1>Редактировать Фото</h1>
+
+    {% include 'partial/form.html' with form_method='post' enctype="multipart/form-data" button_text='Update' %}
+{% endblock %}

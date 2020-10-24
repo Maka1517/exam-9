@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Картинка{% endblock %}
+
+
+
+{% block content %}
+    <div class="box">
+        <h1>{{ photo.author }}</h1>
+        {% if photo.picture %}
+            <img class="avatar" src="{{ photo.picture.url}}" width="100" height="100" alt="photo">
+        {% endif %}
+        <p class="pre">{{ photo.text }}</p>
+        <p>Загружено: {{ photo.created_date|date:"d.m.Y H:i:s" }}</p>
+
+        {% if perms.webapp.change_issue or issue.author == request.user %}
+            <p><a href="{% url 'webapp:photo_delete' photo.pk %}">Delete</a></p>
+            <p><a href="{% url 'webapp:photo_update' photo.pk %}">Update</a></p>
+        {% endif %}
+{#{#}
+        {% if is_paginated %}
+            {% include 'partial/pagination.html' %}
+        {% endif %}
+{#        <p><a href="{% url 'webapp:review_create' product.pk %}">Review</a></p>#}
+    </div>
+{% endblock %}
