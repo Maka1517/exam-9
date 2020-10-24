@@ -1,10 +1,13 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic.base import View
+from rest_framework.generics import get_object_or_404
 
 from webapp.froms import PhotoForm
-from webapp.models import Photo
+from webapp.models import Photo, PhotoLike
 
 
 class IndexView(ListView):
@@ -55,13 +58,31 @@ class PhotoUpdateView(PermissionRequiredMixin, UpdateView):
         return reverse('webapp:photo_view', kwargs={'pk': self.object.pk})
 
 
-
-
 class PhotoDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'photo/photo_delete.html'
     model = Photo
     context_object_name = 'photo'
     success_url = reverse_lazy('webapp:index')
     permission_required = 'webapp.delete_photo'
+
+
+class PhotoLikeView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        liked_photo = get_object_or_404(Photo, pk=kwargs.get('pk'))
+        like, created = PhotoLike.objects.get_or_create(photo=liked_photo, user=request.user)
+        if created:
+            liked_photo.save()
+            return HttpResponse()
+        else:
+            return HttpResponseForbidden()
+
+
+class UnLikeView(LoginRequiredMixin, View):
+    def delete(self, request, *args, **kwargs):
+        photo = get_object_or_404(Photo, pk=kwargs.get('pk'))
+        like = get_object_or_404(photo.likes, user=request.user)
+        like.delete()
+        photo.save()
+        return HttpResponse()
 
 

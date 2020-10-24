@@ -13,10 +13,14 @@
                 <img class="avatar" src="{{ photo.picture.url }}" width="50" height="50" alt="photo">
             {% endif %}
 
-    {#        {% if perms.webapp.change_product or product.author == request.user %}#}
-    {#        <p><a href="{% url 'webapp:product_delete' product.pk %}">Delete</a></p>#}
-    {#        <p><a href="{% url 'webapp:product_update' product.pk %}">Update</a></p>#}
-    {#        {% endif %}#}
+            {% if perms.webapp.change_product or product.author == request.user %}
+                <p><a href="{% url 'webapp:photo_delete' photo.pk %}">Delete</a></p>
+                <p><a href="{% url 'webapp:photo_update' photo.pk %}">Update</a></p>
+            {% endif %}
+          <p>
+            <a class="{% if photo in liked_photo %}hidden{% endif %} like" href="{% url 'webapp:photo_like' photo.pk %}">Избранное</a>
+            <a class="{% if not photo in liked_photo %}hidden{% endif %} unlike" href="{% url 'webapp:article_unlike' article.pk %}">Unlike</a>
+          </p>
          </div>
     {% endfor %}
 {% endblock %}
