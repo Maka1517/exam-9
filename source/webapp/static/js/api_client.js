@@ -1,5 +1,5 @@
 const BASE_URL = 'http://localhost:8000/';
-const BASE_API_URL = BASE_URL + 'api/v1/';
+const BASE_API_URL = BASE_URL + 'api/';
 
 
 function getCookie(name) {
@@ -44,3 +44,12 @@ async function makeRequest(url, method='GET', data=undefined) {
         throw error;
     }
 }
+
+
+
+// window.addEventListener('load', function() {
+//     let info = document.getElementById('favorites')
+//     let info_data = makeRequest(BASE_URL + "accounts"+ "/"+"id", "GET", {BASE_API_URL +"photos"+"/"})
+//     info.appendChild(info_data);})
+
+
