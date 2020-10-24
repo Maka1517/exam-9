@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -10,7 +10,7 @@ from webapp.models import Photo
 class IndexView(ListView):
     model = Photo
     template_name = 'photo/index.html'
-    ordering = ['created_date']
+    ordering = ['-created_date']
     paginate_by = 5
     context_object_name = 'photos'
 
@@ -20,14 +20,14 @@ class PhotoView(DetailView):
    model = Photo
 
 
-class PhotoCreatView(PermissionRequiredMixin, CreateView):
+class PhotoCreatView(LoginRequiredMixin, CreateView):
     template_name = 'photo/photo_create.html'
     model = Photo
     fields = ['picture', 'text']
-    permission_required = 'webapp.add_photo'
+    # permission_required = 'webapp.add_photo'
 
     def has_permission(self):
-        return super().has_permission() or self.get_object().author == self.request.user
+        return self.get_object().author == self.request.user
 
     def form_valid(self, form):
         form.instance.author = self.request.user
